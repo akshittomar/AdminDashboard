@@ -199,7 +199,13 @@ const ListItem = (props) => {
       const wildcardSearchTerm = searchTerm + '*';
       const results = index.search(wildcardSearchTerm);
       if(results.length!==0)setFilteredUsers(results.map(result => sampleUsers[result.ref]));else {  const wildcardSearchTerm = '*' + searchTerm + '*';
-      const results = index.search(wildcardSearchTerm); setFilteredUsers(results.map(result => sampleUsers[result.ref])) }
+      const results = index.search(wildcardSearchTerm); setFilteredUsers(results.map(result => sampleUsers[result.ref])); 
+      if(results.length===0){
+
+        const wildcardSearchTerm = str + '*';
+        const results = index.search(wildcardSearchTerm); setFilteredUsers(results.map(result => sampleUsers[result.ref]));
+      } 
+    }
     }
   };
 
@@ -212,7 +218,11 @@ const ListItem = (props) => {
       const wildcardSearchTerm = str + '*';
       const results = index.search(wildcardSearchTerm);
       if(results.length!==0)setFilteredUsers(results.map(result => sampleUsers[result.ref]));else {  const wildcardSearchTerm = '*' + str + '*';
-      const results = index.search(wildcardSearchTerm); setFilteredUsers(results.map(result => sampleUsers[result.ref])) }
+      const results = index.search(wildcardSearchTerm); setFilteredUsers(results.map(result => sampleUsers[result.ref])); if(results.length===0){
+
+        const wildcardSearchTerm = str + '*';
+        const results = index.search(wildcardSearchTerm); setFilteredUsers(results.map(result => sampleUsers[result.ref]));
+      } }
     }
   };
   
