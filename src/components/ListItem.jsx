@@ -97,9 +97,22 @@ const ListItem = (props) => {
 
 
     // Function to get data for the current page
-    const getCurrentPageData = () => {
+    const getCurrentPageData = (event,index) => {
+      if(event==='delete')
+      {
+        
+        const newUsers = filteredUsers.filter((_, i) => i !== index);
+        setFilteredUsers(newUsers);
+        return newUsers;
+      }
+      else if(event==='delete selected')
+      {
+
+      }
+      else {
       const startIndex = (currentPage - 1) * rowsPerPage;
       return filteredUsers.slice(startIndex, startIndex + rowsPerPage);
+      }
     };
   
     // Functions to handle page changes
@@ -308,7 +321,7 @@ const ListItem = (props) => {
            <td style={tdStyle}>{user.role}</td>
            <td style={tdStyle}>
              <button  onClick={() => handleEdit(index)} >Edit</button>&nbsp;
-             <button>Delete</button>
+             <button onClick={()=>{getCurrentPageData('delete',index)}}>Delete</button>
            </td>
         </tr>
         );
@@ -363,7 +376,7 @@ const ListItem = (props) => {
           {/* {getCurrentPageData().map((user, index) => (
            
           ))} */}
-           {getCurrentPageData().map((user, index) => renderRow(user, index))}
+           {getCurrentPageData('simple',1).map((user, index) => renderRow(user, index))}
           {
              <tr style={{fontSize:"small" , color:"GrayText"}}><td>{filteredUsers.length} Results Found</td></tr>
           }
