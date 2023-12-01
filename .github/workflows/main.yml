@@ -60,5 +60,6 @@ jobs:
         with:
           app-name: 'admin-dashboard-akshit'
           slot-name: 'Production'
-          package: release.zip
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C17254BDD47343F7A3725B56FC1EDB76 }}
+          package: release.zip
+          
