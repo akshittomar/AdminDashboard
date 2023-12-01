@@ -185,19 +185,21 @@ const ListItem = (props) => {
       // Append a wildcard to the search term
       const wildcardSearchTerm = searchTerm + '*';
       const results = index.search(wildcardSearchTerm);
-      if(results.length!==0)setFilteredUsers(results.map(result => sampleUsers[result.ref]));else {}
+      if(results.length!==0)setFilteredUsers(results.map(result => sampleUsers[result.ref]));else {  const wildcardSearchTerm = '*' + searchTerm + '*';
+      const results = index.search(wildcardSearchTerm); setFilteredUsers(results.map(result => sampleUsers[result.ref])) }
     }
   };
 
 
   const randomSearch = (str) => {
-    if (!index || str === '') {
+    if (!index || str=== '') {
       setFilteredUsers(sampleUsers);
     } else {
       // Append a wildcard to the search term
       const wildcardSearchTerm = str + '*';
       const results = index.search(wildcardSearchTerm);
-      setFilteredUsers(results.map(result => sampleUsers[result.ref]));
+      if(results.length!==0)setFilteredUsers(results.map(result => sampleUsers[result.ref]));else {  const wildcardSearchTerm = '*' + str + '*';
+      const results = index.search(wildcardSearchTerm); setFilteredUsers(results.map(result => sampleUsers[result.ref])) }
     }
   };
   
@@ -236,6 +238,7 @@ const ListItem = (props) => {
     margin: '5px', // Margin around the button
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)', // Subtle shadow for depth
     transition: 'background-color 0.3s', // Smooth transition for hover effect
+    
   };
   
   // Use it in your button like this:
@@ -321,6 +324,9 @@ const ListItem = (props) => {
 
 
     <div>
+      
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+      <div >
             <input
         type="text"
         placeholder="Search..."
@@ -329,6 +335,11 @@ const ListItem = (props) => {
         style={searchBoxStyle}
       />
       <button onClick={handleSearch} style={searchButtonStyle}>Search</button>
+
+      </div>
+        
+
+      </div>
 
     <div style={containerStyle}>
     
@@ -354,7 +365,7 @@ const ListItem = (props) => {
           ))} */}
            {getCurrentPageData().map((user, index) => renderRow(user, index))}
           {
-             <div style={{fontSize:"small" , color:"GrayText"}}>  &nbsp;&nbsp; {filteredUsers.length} &nbsp;Results&nbsp; Found</div>
+             <tr style={{fontSize:"small" , color:"GrayText"}}><td>{filteredUsers.length} Results Found</td></tr>
           }
         </tbody>
       </table>
