@@ -340,7 +340,11 @@ const ListItem = (props) => {
 
 
 
-
+const handleDeleteSelected = () => {
+  const newUsers = filteredUsers.filter((_, index) => !selectedRows.has(index));
+  setFilteredUsers(newUsers);
+  setSelectedRows(new Set()); // Clear the selection
+};  
 
   return (
 
@@ -394,7 +398,8 @@ const ListItem = (props) => {
       </table>
     </div>
 
-
+    <div  style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+            <div> <button onClick={handleDeleteSelected}>Delete Selected</button></div>
     <div>
         <button onClick={goToFirstPage} disabled={currentPage === 1}>First</button>
         <button onClick={goToPreviousPage} disabled={currentPage === 1}>Previous</button>
@@ -410,8 +415,8 @@ const ListItem = (props) => {
         <button onClick={goToNextPage} disabled={currentPage === totalPages}>Next</button>
         <button onClick={goToLastPage} disabled={currentPage === totalPages}>Last</button>
       </div>
-
-
+            
+      </div>
     </div>
   );
 };
