@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import lunr from 'lunr';
 
-const sampleUsers = [
-  { name: 'Aaron Miles', email: 'aaron@mailinator.com', role: 'member' },
-    { name: 'Aishwarya Naiyyyyyyyyk', email: 'aishwarya@mailinayyyytor.com', role: 'member' },
-    { name: 'Aishw', email: 'ya@mailinator.com', role: 'member' },
-    { name: 'Ai', email: 'aishwarya@mailinator.com', role: 'member' },
-    { name: 'Aishwarya Naik', email: 'aism', role: 'member' },
-    { name: 'Aisk', email: 'aisor.com', role: 'member' },
-];
+// const sampleUsers = [
+//   { name: 'Aaron Miles', email: 'aaron@mailinator.com', role: 'member' },
+//     { name: 'Aishwarya Naiyyyyyyyyk', email: 'aishwarya@mailinayyyytor.com', role: 'member' },
+//     { name: 'Aishw', email: 'ya@mailinator.com', role: 'member' },
+//     { name: 'Ai', email: 'aishwarya@mailinator.com', role: 'member' },
+//     { name: 'Aishwarya Naik', email: 'aism', role: 'member' },
+//     { name: 'Aisk', email: 'aisor.com', role: 'member' },
+// ];
 
 
 const rowsPerPage = 10;
@@ -21,7 +21,51 @@ const ListItem = (props) => {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredUsers, setFilteredUsers] = useState(props.user);
+  const sampleUsers = props.user;
   const [index, setIndex] = useState(null);
+
+
+
+
+
+  const [isEdit, setIsEdit] = useState(Array(sampleUsers.length).fill(false));
+  const [formData, setFormData] = useState(sampleUsers);
+
+  const handleEdit = (index) => {
+      const updatedIsEdit = [...isEdit];
+      updatedIsEdit[index] = true;
+      setIsEdit(updatedIsEdit);
+  };
+
+  const handleSave = (index) => {
+      const updatedIsEdit = [...isEdit];
+      updatedIsEdit[index] = false;
+      setIsEdit(updatedIsEdit);
+      
+      // Update the main user data here
+      // Assuming sampleUsers is updatable or replaced by a state
+      sampleUsers[index] = formData[index];
+  };
+
+  const handleInputChange = (event, index, field) => {
+      const updatedFormData = [...formData];
+      updatedFormData[index] = {
+          ...updatedFormData[index],
+          [field]: event.target.value
+      };
+      setFormData(updatedFormData);
+      sampleUsers[index]=updatedFormData;
+  };
+
+  
+
+
+
+
+
+
+
+
 
 
   const toggleRowSelection = (index) => {
@@ -121,6 +165,7 @@ const ListItem = (props) => {
   // Initialize Lunr.js index
   useEffect(() => {
     setFilteredUsers(props.user);
+    const sampleUsers = props.user;
     setIndex(lunr(function () {
       this.field('name');
       this.field('email');
@@ -199,6 +244,77 @@ const ListItem = (props) => {
 
   // Styles
   // ... your styles ...
+  const renderRow = (user, index) => {
+    if (isEdit[index]) {
+        return (
+            <tr key={index}>
+              <td style={tdStyle}>Edit This Row</td>
+                <td style={tdStyle}>
+                    <input
+                        type="text"
+                        value={formData[index].name}
+                        onChange={(e) => handleInputChange(e, index, 'name')}
+                        required
+                    />
+                </td>
+                <td style={tdStyle}>
+                    <input
+                        type="email"
+                        value={formData[index].email}
+                        onChange={(e) => handleInputChange(e, index, 'email')}
+                        required
+                    />
+                </td>
+                <td style={tdStyle}>
+                    <input
+                        type="text"
+                        value={formData[index].role}
+                        onChange={(e) => handleInputChange(e, index, 'role')}
+                        required
+                    />
+                </td>
+                <td style={tdStyle}>
+                    <button onClick={() => handleSave(index)}>Save</button>
+                </td>
+            </tr>
+        );
+    } else {
+        return (
+            // <tr key={index}>
+            //     <td style={tdStyle}>{user.name}</td>
+            //     <td style={tdStyle}>{user.email}</td>
+            //     <td style={tdStyle}>{user.role}</td>
+            //     <td style={tdStyle}>
+            //         <button onClick={() => handleEdit(index)}>Edit</button>&nbsp;
+            //         <button>Delete</button>
+            //     </td>
+            // </tr>
+            <tr key={index}  style={isRowSelected(index) || isRowSelected(-1)? {backgroundColor:"grey"} : {}}
+            onMouseEnter={  (e) => { !isRowSelected(index) && !isRowSelected(-1) && (e.currentTarget.style.backgroundColor = hoverStyle.backgroundColor)} }
+            onMouseLeave={(e) => { !isRowSelected(index) && !isRowSelected(-1) && (e.currentTarget.style.backgroundColor = '')} }
+        >
+          <td style={tdStyle}>
+            <input 
+              type="checkbox" 
+              checked={isRowSelected(index)} 
+              onChange={() => toggleRowSelection(index)} 
+            />
+          </td>
+           <td style={tdStyle}>{user.name}</td>
+           <td style={tdStyle}>{user.email}</td>
+           <td style={tdStyle}>{user.role}</td>
+           <td style={tdStyle}>
+             <button  onClick={() => handleEdit(index)} >Edit</button>&nbsp;
+             <button>Delete</button>
+           </td>
+        </tr>
+        );
+    }
+};
+
+
+
+
 
   return (
 
@@ -233,27 +349,10 @@ const ListItem = (props) => {
           </tr>
         </thead>
         <tbody>
-          {getCurrentPageData().map((user, index) => (
-            <tr key={index}  style={isRowSelected(index) || isRowSelected(-1)? {backgroundColor:"grey"} : {}}
-                onMouseEnter={  (e) => { !isRowSelected(index) && !isRowSelected(-1) && (e.currentTarget.style.backgroundColor = hoverStyle.backgroundColor)} }
-                onMouseLeave={(e) => { !isRowSelected(index) && !isRowSelected(-1) && (e.currentTarget.style.backgroundColor = '')} }
-            >
-              <td style={tdStyle}>
-                <input 
-                  type="checkbox" 
-                  checked={isRowSelected(index)} 
-                  onChange={() => toggleRowSelection(index)} 
-                />
-              </td>
-               <td style={tdStyle}>{user.name}</td>
-               <td style={tdStyle}>{user.email}</td>
-               <td style={tdStyle}>{user.role}</td>
-               <td style={tdStyle}>
-                 <button>Edit</button>&nbsp;
-                 <button>Delete</button>
-               </td>
-            </tr>
-          ))}
+          {/* {getCurrentPageData().map((user, index) => (
+           
+          ))} */}
+           {getCurrentPageData().map((user, index) => renderRow(user, index))}
           {
              <div style={{fontSize:"small" , color:"GrayText"}}>  &nbsp;&nbsp; {filteredUsers.length} &nbsp;Results&nbsp; Found</div>
           }
