@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import lunr from 'lunr';
 
@@ -44,7 +45,8 @@ const ListItem = (props) => {
       
       // Update the main user data here
       // Assuming sampleUsers is updatable or replaced by a state
-      sampleUsers[index] = formData[index];
+      // sampleUsers[index] = formData[index];
+      filteredUsers[index] = formData[index];
   };
 
   const handleInputChange = (event, index, field) => {
@@ -54,7 +56,8 @@ const ListItem = (props) => {
           [field]: event.target.value
       };
       setFormData(updatedFormData);
-      sampleUsers[index]=updatedFormData;
+      // sampleUsers[index]=updatedFormData;
+      filteredUsers[index]=updatedFormData;
   };
 
   
@@ -97,22 +100,12 @@ const ListItem = (props) => {
 
 
     // Function to get data for the current page
-    const getCurrentPageData = (event,index) => {
-      if(event==='delete')
-      {
-        
-        const newUsers = filteredUsers.filter((_, i) => i !== index);
-        setFilteredUsers(newUsers);
-        return newUsers;
-      }
-      else if(event==='delete selected')
-      {
-
-      }
-      else {
+    const getCurrentPageData = () => {
+  
+      
       const startIndex = (currentPage - 1) * rowsPerPage;
       return filteredUsers.slice(startIndex, startIndex + rowsPerPage);
-      }
+      
     };
   
     // Functions to handle page changes
@@ -264,6 +257,90 @@ const ListItem = (props) => {
     
   };
   
+
+  // const handleDelete = (index) => {
+  //   const newUsers = filteredUsers.filter((_, i) => i !== index);
+  //   setFilteredUsers(newUsers);
+
+  //   // If this row is selected, remove it from the selectedRows set
+  //   if (selectedRows.has(index)) {
+  //     const newSelectedRows = new Set(selectedRows);
+  //     newSelectedRows.delete(index);
+  //     setSelectedRows(newSelectedRows);
+  //   }
+  // };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const handleDelete = (index) => {
+    const newUsers = filteredUsers.filter((_, i) => i !== index);
+    setFilteredUsers(newUsers);
+  
+    // Update isEdit array
+    const updatedIsEdit = isEdit.filter((_, i) => i !== index);
+    setIsEdit(updatedIsEdit);
+  
+    // Update formData array
+    const updatedFormData = formData.filter((_, i) => i !== index);
+    setFormData(updatedFormData);
+  
+    // Update selectedRows
+    const newSelectedRows = new Set();
+    selectedRows.forEach((selectedIndex) => {
+      if (selectedIndex < index) {
+        newSelectedRows.add(selectedIndex);
+      } else if (selectedIndex > index) {
+        newSelectedRows.add(selectedIndex - 1);
+      }
+    });
+    setSelectedRows(newSelectedRows);
+  
+    // If the deleted row was selected, remove it from the selectedRows set
+    if (selectedRows.has(index)) {
+      selectedRows.delete(index);
+    }
+  };
+  
+
+
+
+
+
+
+
   // Use it in your button like this:
   // <button style={searchButtonStyle}>Search</button>
   
@@ -331,7 +408,7 @@ const ListItem = (props) => {
            <td style={tdStyle}>{user.role}</td>
            <td style={tdStyle}>
              <button  onClick={() => handleEdit(index)} >Edit</button>&nbsp;
-             <button onClick={()=>{getCurrentPageData('delete',index)}}>Delete</button>
+             <button onClick={()=>{handleDelete(index)}}>Delete</button>
            </td>
         </tr>
         );
@@ -390,7 +467,7 @@ const handleDeleteSelected = () => {
           {/* {getCurrentPageData().map((user, index) => (
            
           ))} */}
-           {getCurrentPageData('simple',1).map((user, index) => renderRow(user, index))}
+           {getCurrentPageData().map((user, index) => renderRow(user, index))}
           {
              <tr style={{fontSize:"small" , color:"GrayText"}}><td>{filteredUsers.length} Results Found</td></tr>
           }
