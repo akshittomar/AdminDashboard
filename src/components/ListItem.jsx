@@ -417,11 +417,37 @@ const ListItem = (props) => {
 
 
 
+// const handleDeleteSelected = () => {
+//   const newUsers = filteredUsers.filter((_, index) => !selectedRows.has(index));
+//   setFilteredUsers(newUsers);
+//   setSelectedRows(new Set()); // Clear the selection
+// };  
+
+
+
+
+
 const handleDeleteSelected = () => {
+  const indicesToDelete = Array.from(selectedRows);
+
+  // Filter out the selected users
   const newUsers = filteredUsers.filter((_, index) => !selectedRows.has(index));
   setFilteredUsers(newUsers);
-  setSelectedRows(new Set()); // Clear the selection
-};  
+
+  // Update isEdit array
+  const updatedIsEdit = isEdit.filter((_, index) => !selectedRows.has(index));
+  setIsEdit(updatedIsEdit);
+
+  // Update formData array
+  const updatedFormData = formData.filter((_, index) => !selectedRows.has(index));
+  setFormData(updatedFormData);
+
+  // Clear the selection
+  setSelectedRows(new Set());
+};
+
+
+
 
   return (
 
