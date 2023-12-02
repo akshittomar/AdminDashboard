@@ -504,6 +504,7 @@ const handleDeleteSelected = () => {
     <div  style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
             <div> <button onClick={handleDeleteSelected}>Delete Selected</button></div>
     <div>
+      <div>Page {currentPage} of {totalPages}</div><hr/>
         <button onClick={goToFirstPage} disabled={currentPage === 1}>First</button>
         <button onClick={goToPreviousPage} disabled={currentPage === 1}>Previous</button>
         {Array.from({ length: totalPages }, (_, i) => (
