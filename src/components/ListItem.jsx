@@ -158,6 +158,7 @@ const ListItem = (props) => {
     padding: '10px', // Consistent padding with headers
     maxWidth: '250px',
     overflowWrap: 'break-word',
+    fontFamily:"fantasy"
   };
 
   const hoverStyle = {
@@ -257,6 +258,37 @@ const ListItem = (props) => {
     
   };
   
+
+
+  const deleteButtonStyle = {
+    backgroundColor: 'rgb(200 42 42)', // Button background color
+    color: 'white', // Text color
+    padding: '10px 20px', // Padding around the text
+    border: 'none', // No border for a modern look
+    borderRadius: '5px', // Rounded corners
+    cursor: 'pointer', // Cursor changes to pointer on hover
+    fontSize: '16px', // Font size
+    fontWeight: 'bold', // Bold text
+    margin: '5px', // Margin around the button
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)', // Subtle shadow for depth
+    transition: 'background-color 0.3s', // Smooth transition for hover effect
+    
+  };
+
+  const editButtonStyle = {
+    backgroundColor: 'green', // Button background color
+    color: 'white', // Text color
+    padding: '10px 20px', // Padding around the text
+    border: 'none', // No border for a modern look
+    borderRadius: '5px', // Rounded corners
+    cursor: 'pointer', // Cursor changes to pointer on hover
+    fontSize: '16px', // Font size
+    fontWeight: 'bold', // Bold text
+    margin: '5px', // Margin around the button
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)', // Subtle shadow for depth
+    transition: 'background-color 0.3s', // Smooth transition for hover effect
+    
+  };
 
   // const handleDelete = (index) => {
   //   const newUsers = filteredUsers.filter((_, i) => i !== index);
@@ -407,8 +439,8 @@ const ListItem = (props) => {
            <td style={tdStyle}>{user.email}</td>
            <td style={tdStyle}>{user.role}</td>
            <td style={tdStyle}>
-             <button  onClick={() => handleEdit(index)} >Edit</button>&nbsp;
-             <button onClick={()=>{handleDelete(index)}}>Delete</button>
+             <button style={editButtonStyle} onClick={() => handleEdit(index)} >Edit</button>&nbsp;
+             <button style={deleteButtonStyle} onClick={()=>{handleDelete(index)}}>Delete</button>
            </td>
         </tr>
         );
@@ -502,7 +534,7 @@ const handleDeleteSelected = () => {
     </div>
 
     <div  style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-            <div> <button onClick={handleDeleteSelected}>Delete Selected</button></div>
+            <div> <button style={deleteButtonStyle}  onClick={handleDeleteSelected}>Delete Selected</button></div>
     <div>
       <div>Page {currentPage} of {totalPages}</div><hr/>
         <button onClick={goToFirstPage} disabled={currentPage === 1}>First</button>
