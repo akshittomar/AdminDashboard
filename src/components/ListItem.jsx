@@ -495,7 +495,7 @@ const handleDeleteSelected = () => {
           ))} */}
            {getCurrentPageData().map((user, index) => renderRow(user, index))}
           {
-             <tr style={{fontSize:"small" , color:"GrayText"}}><td>{filteredUsers.length} Results Found</td></tr>
+             <tr style={{fontSize:"small" , color:"GrayText"}}><td>{filteredUsers.length} Rows Found</td></tr>
           }
         </tbody>
       </table>
