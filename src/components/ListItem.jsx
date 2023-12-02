@@ -524,13 +524,14 @@ const handleDeleteSelected = () => {
       <table style={tableStyle}>
         <thead>
           <tr>
-          <th style={thStyle}>
+          {/* <th style={thStyle}>
                 <input 
                   type="checkbox" 
                   checked={isRowSelected(-1)} 
                   onChange={() => toggleRowSelection(-1)} 
                 />
-              </th>
+              </th> */}
+              <th style={thStyle}>Rows</th>
           <th style={thStyle}>Name</th>
              <th style={thStyle}>Email</th>
              <th style={thStyle}>Role</th>
