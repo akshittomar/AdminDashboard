@@ -155,10 +155,10 @@ const ListItem = (props) => {
   const tdStyle = {
     borderBottom: '1px solid #ddd',
     textAlign: 'left',
-    padding: '10px', // Consistent padding with headers
+    padding: '5px', // Consistent padding with headers
     maxWidth: '250px',
     overflowWrap: 'break-word',
-    fontFamily:"fantasy"
+    fontFamily:"serif"
   };
 
   const hoverStyle = {
@@ -263,11 +263,27 @@ const ListItem = (props) => {
   const deleteButtonStyle = {
     backgroundColor: 'rgb(200 42 42)', // Button background color
     color: 'white', // Text color
-    padding: '10px 20px', // Padding around the text
+    padding: '7px 15px', // Padding around the text
     border: 'none', // No border for a modern look
     borderRadius: '5px', // Rounded corners
     cursor: 'pointer', // Cursor changes to pointer on hover
-    fontSize: '16px', // Font size
+    fontSize: '10px', // Font size
+    fontWeight: 'bold', // Bold text
+    margin: '5px', // Margin around the button
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)', // Subtle shadow for depth
+    transition: 'background-color 0.3s', // Smooth transition for hover effect
+    
+  };
+
+
+  const deleteButtonStyle2 = {
+    backgroundColor: 'rgb(200 42 42)', // Button background color
+    color: 'white', // Text color
+    padding: '7px 15px', // Padding around the text
+    border: 'none', // No border for a modern look
+    borderRadius: '5px', // Rounded corners
+    cursor: 'pointer', // Cursor changes to pointer on hover
+    fontSize: '15px', // Font size
     fontWeight: 'bold', // Bold text
     margin: '5px', // Margin around the button
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)', // Subtle shadow for depth
@@ -278,11 +294,11 @@ const ListItem = (props) => {
   const editButtonStyle = {
     backgroundColor: 'green', // Button background color
     color: 'white', // Text color
-    padding: '10px 20px', // Padding around the text
+    padding: '7px 15px', // Padding around the text
     border: 'none', // No border for a modern look
     borderRadius: '5px', // Rounded corners
     cursor: 'pointer', // Cursor changes to pointer on hover
-    fontSize: '16px', // Font size
+    fontSize: '10px', // Font size
     fontWeight: 'bold', // Bold text
     margin: '5px', // Margin around the button
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)', // Subtle shadow for depth
@@ -409,7 +425,7 @@ const ListItem = (props) => {
                     />
                 </td>
                 <td style={tdStyle}>
-                    <button onClick={() => handleSave(index)}>Save</button>
+                    <button style={editButtonStyle} onClick={() => handleSave(index)}>Save</button>
                 </td>
             </tr>
         );
@@ -527,14 +543,14 @@ const handleDeleteSelected = () => {
           ))} */}
            {getCurrentPageData().map((user, index) => renderRow(user, index))}
           {
-             <tr style={{fontSize:"small" , color:"GrayText"}}><td>{filteredUsers.length} Rows Found</td></tr>
+             <tr style={{fontSize:"medium" , color:"black"}}><td>{filteredUsers.length} Rows Found</td></tr>
           }
         </tbody>
       </table>
     </div>
 
     <div  style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-            <div> <button style={deleteButtonStyle}  onClick={handleDeleteSelected}>Delete Selected</button></div>
+            <div> <button style={deleteButtonStyle2}  onClick={handleDeleteSelected}>Delete Selected</button></div>
     <div>
       <div>Page {currentPage} of {totalPages}</div><hr/>
         <button onClick={goToFirstPage} disabled={currentPage === 1}>First</button>
