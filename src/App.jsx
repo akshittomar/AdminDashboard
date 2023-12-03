@@ -1,30 +1,6 @@
-// import React from 'react';
-// import ListItem from './components/ListItem';
-// // import 'bootstrap/dist/css/bootstrap.min.css';
-
-
-// const App = () => {
-//   return (
-//     <div className="container my-4">
-//       <ListItem name="Aaron Miles" email="aaron@mailinator.com" />
-      
-//       {/* Repeat <ListItem /> for as many items as you have */}
-//     </div>
-//   );
-// };
-
-// export default App;
-
-
-
-
-
-
-
 import React, { useState, useEffect } from 'react';
-import ListItem from './components/ListItem';
-// import 'bootstrap/dist/css/bootstrap.min.css';
 
+import ListItem2 from './components/Table';
 const App = () => {
   // State to store the fetched data
   const [items, setItems] = useState([]);
@@ -38,7 +14,7 @@ const App = () => {
         setLoad(true);
         const response = await fetch('https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json'); // Replace with your API endpoint
         const data = await response.json();
-        setItems(data); // Assuming the response is an array of items
+        setItems(data); 
         setLoad(false);
       } catch (error) {
         console.error('Error fetching data: ', error);
@@ -51,8 +27,9 @@ const App = () => {
   return (
     <div className="container my-4">
       
-        { load===false && <ListItem user={items} /> }
+        
         {load=== true && <div>Loading....</div>}
+        {load=== false && <ListItem2 user={items}  />}
       
     </div>
   );
