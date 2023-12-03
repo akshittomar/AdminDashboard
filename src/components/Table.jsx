@@ -309,7 +309,7 @@ const ListItem = (props) => {
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <div> <button className='deleteButtonStyle2' onClick={handleDeleteSelected}>Delete Selected</button></div>
+                <div>  <button className='deleteButtonStyle2' style={selectedRows.size===0 ? {cursor:'not-allowed'}:{}}  onClick={handleDeleteSelected}>Delete Selected</button></div>
                 <div>
                     <div>Page {currentPage} of {totalPages}</div><hr />
                     <button onClick={goToFirstPage} disabled={currentPage === 1}>First</button>
