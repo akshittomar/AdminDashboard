@@ -22,9 +22,13 @@ Before installing, ensure you have [Node.js](https://nodejs.org/) installed.
    npm install
 3. To use this component in a Vite project, follow these steps:
 
- Start the development server:
+   Start the development server:
    ```bash
    npm run dev
+4. Application is dployed on AWS :
+   Live Link : https://main.d1qy94ew520ugn.amplifyapp.com
+   
+
 
 
 
